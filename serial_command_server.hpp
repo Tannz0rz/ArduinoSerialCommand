@@ -17,6 +17,12 @@ struct SerialCommandRequest
     uint8_t command;
     uint8_t size;
     uint8_t buffer[255];
+
+    SerialCommandRequest() :
+        command { ~0U },
+        size { 0U }
+    {
+    }
 };
 
 struct SerialCommandResponse
@@ -24,6 +30,12 @@ struct SerialCommandResponse
     uint8_t status;
     uint8_t size;
     uint8_t buffer[255];
+
+    SerialCommandResponse() : 
+        status { SerialCommandStatus::FAILURE },
+        size { 0U }
+    {
+    }
 };
 
 template <size_t MAX_COMMANDS>
@@ -78,9 +90,6 @@ public:
             if (request.size > 0) {
                 Serial.readBytes(&request.buffer[0], request.size);
             }
-
-            response.status = SerialCommandStatus::FAILURE;
-            response.size = 0;
 
             for (size_t index = 0; index < m_num_commands; ++index) {
                 if (m_serial_commands[index].command == request.command) {
