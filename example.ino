@@ -5,12 +5,12 @@ enum : uint8_t
     ADD_COMMAND = 0,
     SUB_COMMAND = 1,
     MUL_COMMAND = 2,
-    DIV_COMMAND = 3,
+    DIV_COMMAND = 3
 };
 
 SerialCommandServer<4> serial_command_server;
 
-// Command identifier: ADD_COMMAND (3)
+// Command identifier: ADD_COMMAND (0)
 // Request: a -> uint32_t, b -> uint32_t
 // Response: sum -> uint32_t
 uint8_t add_command(uint8_t const &request_size, uint8_t const *request_buffer, uint8_t &response_size, uint8_t *response_buffer) 
@@ -32,7 +32,7 @@ uint8_t add_command(uint8_t const &request_size, uint8_t const *request_buffer, 
     return SerialCommandStatus::FAILURE;
 }
 
-// Command identifier: SUB_COMMAND (3)
+// Command identifier: SUB_COMMAND (1)
 // Request: a -> uint32_t, b -> uint32_t
 // Response: difference -> uint32_t
 uint8_t sub_command(uint8_t const &request_size, uint8_t const *request_buffer, uint8_t &response_size, uint8_t *response_buffer) 
@@ -54,7 +54,7 @@ uint8_t sub_command(uint8_t const &request_size, uint8_t const *request_buffer, 
     return SerialCommandStatus::FAILURE;
 }
 
-// Command identifier: MUL_COMMAND (3)
+// Command identifier: MUL_COMMAND (2)
 // Request: a -> uint32_t, b -> uint32_t
 // Response: product -> uint32_t
 uint8_t mul_command(uint8_t const &request_size, uint8_t const *request_buffer, uint8_t &response_size, uint8_t *response_buffer) 
