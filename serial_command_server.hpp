@@ -57,14 +57,13 @@ public:
         if (m_num_commands >= MAX_COMMANDS || callback == nullptr) {
             return false;
         }
-        else {
-            size_t const index = m_num_commands++;
-          
-            m_serial_commands[index].command = command;
-            m_serial_commands[index].callback = callback;
-          
-            return true;
-        }
+    
+        size_t const index = m_num_commands++;
+      
+        m_serial_commands[index].command = command;
+        m_serial_commands[index].callback = callback;
+      
+        return true;
     }
     
     void listen()
