@@ -6,53 +6,53 @@
 
 #include <Arduino.h>
 
-enum SerialCommandStatus : uint8_t
+enum serial_command_status_e : uint8_t
 {
     FAILURE = 0,
     SUCCESS = 1
 };
 
-struct SerialCommandRequest
+struct serial_command_request_t
 {
     uint8_t command;
     uint8_t size;
     uint8_t buffer[255];
 
-    SerialCommandRequest() :
+    serial_command_request_t() :
         command { ~0U },
         size { 0U }
     {
     }
 };
 
-struct SerialCommandResponse
+struct serial_command_response_t
 {
     uint8_t status;
     uint8_t size;
     uint8_t buffer[255];
 
-    SerialCommandResponse() : 
-        status { SerialCommandStatus::FAILURE },
+    serial_command_response_t() : 
+        status { serial_command_status_e::FAILURE },
         size { 0U }
     {
     }
 };
 
-template <size_t MAX_COMMANDS>
-class SerialCommandServer
+template <uint8_t MAX_COMMANDS>
+class serial_command_server_t
 {
-    struct SerialCommand
+    struct serial_command_t
     {
         uint8_t command;
         uint8_t (*callback)(uint8_t const &, uint8_t const *, uint8_t &, uint8_t *);
     };
   
-    SerialCommand m_serial_commands[MAX_COMMANDS];
+    serial_command_t m_serial_commands[MAX_COMMANDS];
   
     size_t m_num_commands;
   
 public:
-    SerialCommandServer() :
+    serial_command_server_t() :
         m_num_commands { 0 }
     {
     }
@@ -64,7 +64,7 @@ public:
         while (!Serial);
     }
 
-    bool registerCommand(uint8_t const &command, uint8_t (*callback)(uint8_t const &, uint8_t const *, uint8_t &, uint8_t *))
+    bool register_command(uint8_t const &command, uint8_t (*callback)(uint8_t const &, uint8_t const *, uint8_t &, uint8_t *))
     {
         if (m_num_commands >= MAX_COMMANDS || callback == nullptr) {
             return false;
@@ -81,8 +81,8 @@ public:
     void listen()
     {      
         if (Serial.available()) {
-            SerialCommandRequest request;
-            SerialCommandResponse response;
+            serial_command_request_t request;
+            serial_command_response_t response;
         
             Serial.readBytes(&request.command, sizeof(uint8_t));  
             Serial.readBytes(&request.size, sizeof(uint8_t));
@@ -99,7 +99,7 @@ public:
                 }
             }
 
-            if (response.status == SerialCommandStatus::FAILURE) {
+            if (response.status == serial_command_status_e::FAILURE) {
                 response.size = 0;
             }
 
