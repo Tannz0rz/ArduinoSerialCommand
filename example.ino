@@ -22,6 +22,8 @@ uint8_t add_command(uint8_t const &request_size, uint8_t const *request_buffer, 
         memcpy(&a, &request_buffer[0], sizeof(uint32_t));
         memcpy(&b, &request_buffer[sizeof(uint32_t)], sizeof(uint32_t));
       
+        response_size = sizeof(uint32_t);
+        
         uint32_t sum = a + b;
       
         memcpy(&response_buffer[0], &sum, sizeof(uint32_t));      
@@ -44,6 +46,8 @@ uint8_t sub_command(uint8_t const &request_size, uint8_t const *request_buffer, 
         memcpy(&a, &request_buffer[0], sizeof(uint32_t));
         memcpy(&b, &request_buffer[sizeof(uint32_t)], sizeof(uint32_t));
       
+        response_size = sizeof(uint32_t);
+        
         uint32_t difference = a - b;
       
         memcpy(&response_buffer[0], &difference, sizeof(uint32_t));      
@@ -66,6 +70,8 @@ uint8_t mul_command(uint8_t const &request_size, uint8_t const *request_buffer, 
         memcpy(&a, &request_buffer[0], sizeof(uint32_t));
         memcpy(&b, &request_buffer[sizeof(uint32_t)], sizeof(uint32_t));
       
+        response_size = sizeof(uint32_t);
+        
         uint32_t product = a * b;
       
         memcpy(&response_buffer[0], &product, sizeof(uint32_t));      
@@ -88,6 +94,8 @@ uint8_t div_command(uint8_t const &request_size, uint8_t const *request_buffer, 
         memcpy(&a, &request_buffer[0], sizeof(uint32_t));
         memcpy(&b, &request_buffer[sizeof(uint32_t)], sizeof(uint32_t));
       
+        response_size = sizeof(uint32_t);
+        
         uint32_t quotient = a / b;
       
         memcpy(&response_buffer[0], &quotient, sizeof(uint32_t));      
